@@ -2,11 +2,11 @@ const Events = require('../models/Event');
 
 const getAllEvents = async (req, res) => {
   try {
-      const venues = await Venues.find({});
-      res.status(200).json(venues);
+      const events = await Events.find({});
+      res.status(200).json(events);
   } catch (err) {
       console.error(err);
-      res.status(500).json({ message: 'Server error while fetching venues.' });
+      res.status(500).json({ message: 'Server error while fetching events.' });
   }
 };
 
