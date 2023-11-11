@@ -28,15 +28,18 @@ const getEventById = async (req, res) => {
 };
 
 const createEvent = async (req, res) => {
-    const { category_name } = req.body;
+    const { event_name, venue_id, event_date, event_description } = req.body;
 
-    if (!category_name) {
+    if (!event_name || !venue_id || !event_date || !event_description) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 
     try {
         const newEvents = new Events({
-          category_name
+            event_name,
+            venue_id,
+            event_date,
+            event_description,
         });
 
         const savedEvents = await newEvents.save();
