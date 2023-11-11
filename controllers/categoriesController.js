@@ -53,7 +53,7 @@ const createCategory = async (req, res) => {
 
     try {
         const newCategories = new Categories({
-            name
+          category_name
         });
 
         const savedCategories = await newCategories.save();

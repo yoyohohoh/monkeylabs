@@ -18,13 +18,27 @@ app.listen(PORT, () => {
 
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://dreyes18:Newy0rkcity!@dressstore.omjewvf.mongodb.net/DressStore?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://yoyohohoh:Yob1718N925@cluster0.apmkivg.mongodb.net/TicketingSystem?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-const productRoutes = require('./routes/productRoutes');
 const categoriesRoutes = require('./routes/categoriesRoutes');
+const eventCategoriesRoutes = require('./routes/eventCategoryRoutes');
+const eventsRoutes = require('./routes/eventsRoutes');
+const orderItemsRoutes = require('./routes/orderItemRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
+const ticketRoutes = require('./routes/ticketRoutes');
+const userRoutes = require('./routes/userRoutes');
+const venuesRoutes = require('./routes/venueRoutes');
 
-app.use(productRoutes);
 app.use(categoriesRoutes);
+app.use(eventCategoriesRoutes);
+app.use(eventsRoutes);
+app.use(orderItemsRoutes);
+app.use(orderRoutes);
+app.use(paymentRoutes);
+app.use(ticketRoutes);
+app.use(userRoutes);
+app.use(venuesRoutes);
