@@ -28,9 +28,9 @@ const getTicketById = async (req, res) => {
 };
 
 const createTicket = async (req, res) => {
-    const { name } = req.body;
+    const { event_id, price, available, seat_number } = req.body;
 
-    if (!name) {
+    if (!event_id || !price || !available || !seat_number) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 

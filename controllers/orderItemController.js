@@ -28,9 +28,9 @@ const getOrderItemById = async (req, res) => {
 };
 
 const createOrderItem = async (req, res) => {
-    const { name } = req.body;
+    const { order_id, ticket_id, quantity } = req.body;
 
-    if (!name) {
+    if (!order_id || !ticket_id || !quantity) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 

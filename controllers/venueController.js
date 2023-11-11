@@ -28,9 +28,9 @@ const getVenueById = async (req, res) => {
 };
 
 const createVenue = async (req, res) => {
-    const { name } = req.body;
+    const { venue_name, location } = req.body;
 
-    if (!name) {
+    if (!venue_name || !location) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 

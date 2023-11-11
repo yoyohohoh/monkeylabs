@@ -27,9 +27,9 @@ const getCategoryById = async (req, res) => {
 };
 
 const createCategory = async (req, res) => {
-    const { name } = req.body;
+    const { category_name } = req.body;
 
-    if (!name) {
+    if (!category_name) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 
@@ -79,5 +79,5 @@ module.exports = {
   getCategoryById,
   createCategory,
   updateCategory,
-  deleteAllCategories
+  deleteAllCategories,
 }

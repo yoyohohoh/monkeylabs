@@ -75,10 +75,29 @@ const deleteAllEvents = async (req, res) => {
   }
 };
 
+
+const deleteEventById = async (req, res) => {
+  const eventsId = req.params.id;
+
+  try {
+      const events = await Events.findByIdAndDelete(eventsId);
+      
+      if (!events) {
+          return res.status(404).json({ message: 'Events not found.' });
+      }
+
+      res.status(200).json({ message: 'Events successfully deleted.', deletedEvents: events });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Server error while deleting events.' });
+  }
+};
+
 module.exports = {
   getAllEvents,
   getEventById,
   createEvent,
   updateEvent,
-  deleteAllEvents
+  deleteAllEvents,
+  deleteEventById
 }
