@@ -1,29 +1,12 @@
 const OrderItems = require('../models/OrderItem');
 
 const getAllOrderItems = async (req, res) => {
-  var keyword = req.query.name;
-
-  if (keyword == null) {
-    try {
-      const orderItems = await OrderItems.find();
-      res.status(200).json(orderItems);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  }
-  else {
-    try {
-      keyword = keyword.replace('[', '').replace(']', '').trim();
-      const orderItems = await OrderItems.find({
-        name: { $regex: keyword, $options: 'i' }
-      });
-
-      res.status(200).json(orderItems);
-    }
-    catch (err) {
+  try {
+      const venues = await Venues.find({});
+      res.status(200).json(venues);
+  } catch (err) {
       console.error(err);
-      res.status(500).json({ message: 'Server error while fetching orderItems.' });
-    }
+      res.status(500).json({ message: 'Server error while fetching venues.' });
   }
 };
 
@@ -84,23 +67,6 @@ const updateOrderItem = async (req, res) => {
   }
 };
 
-const deleteOrderItemById = async (req, res) => {
-  const orderItemsId = req.params.id;
-
-  try {
-      const orderItems = await OrderItems.findByIdAndDelete(orderItemsId);
-      
-      if (!orderItems) {
-          return res.status(404).json({ message: 'OrderItems not found.' });
-      }
-
-      res.status(200).json({ message: 'OrderItems successfully deleted.', deletedOrderItems: orderItems });
-  } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Server error while deleting orderItems.' });
-  }
-};
-
 const deleteAllOrderItems = async (req, res) => {
   try {
       const orderItems = await OrderItems.deleteMany({});
@@ -116,6 +82,5 @@ module.exports = {
   getOrderItemById,
   createOrderItem,
   updateOrderItem,
-  deleteOrderItemById,
   deleteAllOrderItems
 }

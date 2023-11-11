@@ -1,29 +1,12 @@
 const Payments = require('../models/Payment');
 
 const getAllPayments = async (req, res) => {
-  var keyword = req.query.name;
-
-  if (keyword == null) {
-    try {
-      const payments = await Payments.find();
-      res.status(200).json(payments);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  }
-  else {
-    try {
-      keyword = keyword.replace('[', '').replace(']', '').trim();
-      const payments = await Payments.find({
-        name: { $regex: keyword, $options: 'i' }
-      });
-
-      res.status(200).json(payments);
-    }
-    catch (err) {
+  try {
+      const venues = await Venues.find({});
+      res.status(200).json(venues);
+  } catch (err) {
       console.error(err);
-      res.status(500).json({ message: 'Server error while fetching payments.' });
-    }
+      res.status(500).json({ message: 'Server error while fetching venues.' });
   }
 };
 
@@ -84,23 +67,6 @@ const updatePayment = async (req, res) => {
   }
 };
 
-const deletePaymentById = async (req, res) => {
-  const paymentsId = req.params.id;
-
-  try {
-      const payments = await Payments.findByIdAndDelete(paymentsId);
-      
-      if (!payments) {
-          return res.status(404).json({ message: 'Payments not found.' });
-      }
-
-      res.status(200).json({ message: 'Payments successfully deleted.', deletedPayments: payments });
-  } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Server error while deleting payments.' });
-  }
-};
-
 const deleteAllPayments = async (req, res) => {
   try {
       const payments = await Payments.deleteMany({});
@@ -116,6 +82,5 @@ module.exports = {
   getPaymentById,
   createPayment,
   updatePayment,
-  deletePaymentById,
   deleteAllPayments
 }

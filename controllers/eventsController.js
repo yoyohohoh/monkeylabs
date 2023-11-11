@@ -1,29 +1,12 @@
 const Events = require('../models/Event');
 
 const getAllEvents = async (req, res) => {
-  var keyword = req.query.name;
-
-  if (keyword == null) {
-    try {
-      const events = await Events.find();
-      res.status(200).json(events);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  }
-  else {
-    try {
-      keyword = keyword.replace('[', '').replace(']', '').trim();
-      const events = await Events.find({
-        name: { $regex: keyword, $options: 'i' }
-      });
-
-      res.status(200).json(events);
-    }
-    catch (err) {
+  try {
+      const venues = await Venues.find({});
+      res.status(200).json(venues);
+  } catch (err) {
       console.error(err);
-      res.status(500).json({ message: 'Server error while fetching events.' });
-    }
+      res.status(500).json({ message: 'Server error while fetching venues.' });
   }
 };
 
@@ -82,23 +65,6 @@ const updateEvent = async (req, res) => {
   }
 };
 
-const deleteEventById = async (req, res) => {
-  const eventsId = req.params.id;
-
-  try {
-      const events = await Events.findByIdAndDelete(eventsId);
-      
-      if (!events) {
-          return res.status(404).json({ message: 'Events not found.' });
-      }
-
-      res.status(200).json({ message: 'Events successfully deleted.', deletedEvents: events });
-  } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Server error while deleting events.' });
-  }
-};
-
 const deleteAllEvents = async (req, res) => {
   try {
       const events = await Events.deleteMany({});
@@ -114,6 +80,5 @@ module.exports = {
   getEventById,
   createEvent,
   updateEvent,
-  deleteEventById,
   deleteAllEvents
 }

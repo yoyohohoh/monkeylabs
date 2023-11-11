@@ -1,29 +1,12 @@
 const Tickets = require('../models/Ticket');
 
 const getAllTickets = async (req, res) => {
-  var keyword = req.query.name;
-
-  if (keyword == null) {
-    try {
-      const tickets = await Tickets.find();
-      res.status(200).json(tickets);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  }
-  else {
-    try {
-      keyword = keyword.replace('[', '').replace(']', '').trim();
-      const tickets = await Tickets.find({
-        name: { $regex: keyword, $options: 'i' }
-      });
-
-      res.status(200).json(tickets);
-    }
-    catch (err) {
+  try {
+      const venues = await Venues.find({});
+      res.status(200).json(venues);
+  } catch (err) {
       console.error(err);
-      res.status(500).json({ message: 'Server error while fetching tickets.' });
-    }
+      res.status(500).json({ message: 'Server error while fetching venues.' });
   }
 };
 
@@ -85,23 +68,6 @@ const updateTicket = async (req, res) => {
   }
 };
 
-const deleteTicketById = async (req, res) => {
-  const ticketsId = req.params.id;
-
-  try {
-      const tickets = await Tickets.findByIdAndDelete(ticketsId);
-      
-      if (!tickets) {
-          return res.status(404).json({ message: 'Tickets not found.' });
-      }
-
-      res.status(200).json({ message: 'Tickets successfully deleted.', deletedTickets: tickets });
-  } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Server error while deleting tickets.' });
-  }
-};
-
 const deleteAllTickets = async (req, res) => {
   try {
       const tickets = await Tickets.deleteMany({});
@@ -117,6 +83,5 @@ module.exports = {
   getTicketById,
   createTicket,
   updateTicket,
-  deleteTicketById,
   deleteAllTickets
 }

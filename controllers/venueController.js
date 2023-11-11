@@ -1,29 +1,12 @@
 const Venues = require('../models/Venue');
 
 const getAllVenues = async (req, res) => {
-  var keyword = req.query.name;
-
-  if (keyword == null) {
-    try {
-      const venues = await Venues.find();
+  try {
+      const venues = await Venues.find({});
       res.status(200).json(venues);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  }
-  else {
-    try {
-      keyword = keyword.replace('[', '').replace(']', '').trim();
-      const venues = await Venues.find({
-        name: { $regex: keyword, $options: 'i' }
-      });
-
-      res.status(200).json(venues);
-    }
-    catch (err) {
+  } catch (err) {
       console.error(err);
       res.status(500).json({ message: 'Server error while fetching venues.' });
-    }
   }
 };
 
@@ -83,23 +66,6 @@ const updateVenue = async (req, res) => {
   }
 };
 
-const deleteVenueById = async (req, res) => {
-  const venuesId = req.params.id;
-
-  try {
-      const venues = await Venues.findByIdAndDelete(venuesId);
-      
-      if (!venues) {
-          return res.status(404).json({ message: 'Venues not found.' });
-      }
-
-      res.status(200).json({ message: 'Venues successfully deleted.', deletedVenues: venues });
-  } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Server error while deleting venues.' });
-  }
-};
-
 const deleteAllVenues = async (req, res) => {
   try {
       const venues = await Venues.deleteMany({});
@@ -115,6 +81,5 @@ module.exports = {
   getVenueById,
   createVenue,
   updateVenue,
-  deleteVenueById,
   deleteAllVenues
 }

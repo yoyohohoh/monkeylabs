@@ -1,29 +1,12 @@
 const EventCategories = require('../models/EventCategory');
 
 const getAllEventCategories = async (req, res) => {
-  var keyword = req.query.name;
-
-  if (keyword == null) {
-    try {
-      const eventCategories = await EventCategories.find();
-      res.status(200).json(eventCategories);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  }
-  else {
-    try {
-      keyword = keyword.replace('[', '').replace(']', '').trim();
-      const eventCategories = await EventCategories.find({
-        name: { $regex: keyword, $options: 'i' }
-      });
-
-      res.status(200).json(eventCategories);
-    }
-    catch (err) {
+  try {
+      const venues = await Venues.find({});
+      res.status(200).json(venues);
+  } catch (err) {
       console.error(err);
-      res.status(500).json({ message: 'Server error while fetching eventCategories.' });
-    }
+      res.status(500).json({ message: 'Server error while fetching venues.' });
   }
 };
 
@@ -83,23 +66,6 @@ const updateEventCategory = async (req, res) => {
   }
 };
 
-const deleteEventCategoryById = async (req, res) => {
-  const eventCategoriesId = req.params.id;
-
-  try {
-      const eventCategories = await EventCategories.findByIdAndDelete(eventCategoriesId);
-      
-      if (!eventCategories) {
-          return res.status(404).json({ message: 'EventCategories not found.' });
-      }
-
-      res.status(200).json({ message: 'EventCategories successfully deleted.', deletedEventCategories: eventCategories });
-  } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Server error while deleting eventCategories.' });
-  }
-};
-
 const deleteAllEventCategories = async (req, res) => {
   try {
       const eventCategories = await EventCategories.deleteMany({});
@@ -115,6 +81,5 @@ module.exports = {
   getEventCategoryById,
   createEventCategory,
   updateEventCategory,
-  deleteEventCategoryById,
   deleteAllEventCategories
 }
