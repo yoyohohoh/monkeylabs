@@ -2,11 +2,10 @@ const Categories = require('../models/Category');
 
 const getAllCategories = async (req, res) => {
   try {
-      const venues = await Venues.find({});
-      res.status(200).json(venues);
+    const categories = await Categories.find();
+    res.status(200).json(categories);
   } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Server error while fetching venues.' });
+    res.status(500).json({ message: err.message });
   }
 };
 

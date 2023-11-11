@@ -2,7 +2,7 @@ const EventCategories = require('../models/EventCategory');
 
 const getAllEventCategories = async (req, res) => {
   try {
-      const venues = await Venues.find({});
+      const venues = await EventCategories.find({});
       res.status(200).json(venues);
   } catch (err) {
       console.error(err);

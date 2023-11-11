@@ -2,7 +2,7 @@ const Payments = require('../models/Payment');
 
 const getAllPayments = async (req, res) => {
   try {
-      const venues = await Venues.find({});
+      const venues = await Payments.find({});
       res.status(200).json(venues);
   } catch (err) {
       console.error(err);
