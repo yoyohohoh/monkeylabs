@@ -3,7 +3,7 @@ const eventCategoryController = require('../controllers/eventCategoriesControlle
 
 const router = express.Router();
 
-router.get('/api/eventCategories', eventCategoryController.getAllEventCategories);
+router.get('/api/eventcategories', eventCategoryController.getAllEventCategories);
 
 router.post('/api/eventCategories', eventCategoryController.createEventCategory);
 

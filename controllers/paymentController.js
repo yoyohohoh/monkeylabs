@@ -28,9 +28,9 @@ const getPaymentById = async (req, res) => {
 };
 
 const createPayment = async (req, res) => {
-    const { name } = req.body;
+    const { order_id, payment_date, payment_status } = req.body;
 
-    if (!name) {
+    if (!order_id || !payment_date || !payment_status) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 

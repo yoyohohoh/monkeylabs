@@ -28,9 +28,9 @@ const getEventCategoryById = async (req, res) => {
 };
 
 const createEventCategory = async (req, res) => {
-    const { name } = req.body;
+    const { event_id, category_id } = req.body;
 
-    if (!name) {
+    if (!event_id || !category_id) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 

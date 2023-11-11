@@ -2,7 +2,7 @@ const Events = require('../models/Event');
 
 const getAllEvents = async (req, res) => {
   try {
-      const venues = await Events.find({});
+      const venues = await Venues.find({});
       res.status(200).json(venues);
   } catch (err) {
       console.error(err);
@@ -28,9 +28,9 @@ const getEventById = async (req, res) => {
 };
 
 const createEvent = async (req, res) => {
-    const { name } = req.body;
+    const { category_name } = req.body;
 
-    if (!name) {
+    if (!category_name) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 
@@ -75,29 +75,10 @@ const deleteAllEvents = async (req, res) => {
   }
 };
 
-
-const deleteEventById = async (req, res) => {
-  const eventsId = req.params.id;
-
-  try {
-      const events = await Events.findByIdAndDelete(eventsId);
-      
-      if (!events) {
-          return res.status(404).json({ message: 'Events not found.' });
-      }
-
-      res.status(200).json({ message: 'Events successfully deleted.', deletedEvents: events });
-  } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Server error while deleting events.' });
-  }
-};
-
 module.exports = {
   getAllEvents,
   getEventById,
   createEvent,
   updateEvent,
-  deleteAllEvents,
-  deleteEventById
+  deleteAllEvents
 }

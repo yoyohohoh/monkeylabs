@@ -5,4 +5,4 @@ const eventCategoriesSchema = new mongoose.Schema({
   category_id: String,
 });
 
-module.exports = mongoose.model('Categories', eventCategoriesSchema);
+module.exports = mongoose.model('EventCategories', eventCategoriesSchema);
