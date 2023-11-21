@@ -1,23 +1,5 @@
 const Users = require('../models/User');
 
-/*const getUserByUsername = async (req, res) => {
-  try {
-      // Assuming there's a User model with a 'username' field
-      const { username } = req.params; // Assuming the username is part of the request parameters
-
-      const user = await Users.findOne({ username });
-
-      if (!user) {
-          return res.status(404).json({ message: 'User not found.' });
-      }
-
-      res.status(200).json(user);
-  } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Server error while fetching user by username.' });
-  }
-};*/
-
 const getAllUsers = async (req, res) => {
   try {
       const venues = await Users.find({});
@@ -27,6 +9,25 @@ const getAllUsers = async (req, res) => {
       res.status(500).json({ message: 'Server error while fetching venues.' });
   }
 };
+
+const getUserByUsername = async function (req, res, next) {
+    try {    
+    let username = req.query.username;
+    if(typeof keyword === 'string')
+    {
+        
+        let list = await Product.find({username: { $regex: keyword, $options: 'i' }}, '-password -salt');
+        res.json(list);
+        
+    }
+    else{
+        getAllProducts(req, res, next) ;
+    }
+} catch (error) {
+    next(error);
+    
+}
+    }
 
 const getUserById = async (req, res) => {
   const usersId = req.params.id;
