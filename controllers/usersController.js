@@ -10,23 +10,7 @@ const Users = require('../models/User');
   }
 };*/
 
-const getUserByUsername = async function (req, res) {
-      const username = req.params.username;
-if(typeof username === 'string')
-        {
-    try {
-        const users = await Users.findOne(username);
-        
-        if (!users) {
-            return res.status(404).json({ message: 'Username not found.' });
-        }
 
-        res.status(200).json(users);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server error while fetching username.' });
-    }}
-    }
 
 const getUserById = async (req, res) => {
   const usersId = req.params.id;
@@ -44,6 +28,24 @@ const getUserById = async (req, res) => {
         res.status(500).json({ message: 'Server error while fetching userid.' });
     }
 };
+
+const getUserByUsername = async function (req, res) {
+      const username = req.params.username;
+if(typeof username === 'string')
+        {
+    try {
+        const users = await Users.findOne(username);
+        
+        if (!users) {
+            return res.status(404).json({ message: 'Username not found.' });
+        }
+
+        res.status(200).json(users);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error while fetching username.' });
+    }}
+    }
 
 const createUser = async (req, res) => {
     const { username, email, password } = req.body;
