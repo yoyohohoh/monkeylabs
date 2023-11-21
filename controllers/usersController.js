@@ -22,7 +22,11 @@ const getUserByUsername = async (req, res) => {
     }
   } catch (error) {
     console.error('Error fetching user by username:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
+
+    // Log the stack trace
+    console.error(error.stack);
+
+    res.status(500).json({ message: 'Internal Server Error', error: error.message });
   }
 };
 
