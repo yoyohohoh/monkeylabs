@@ -12,10 +12,10 @@ const Users = require('../models/User');
 
 const getUserByUsername = async function (req, res, next) {
     try {    
-    let username = req.query.username;
+    let username = req.params.username;
     if(typeof username === 'string')
     {
-        username = username.replace('[', '').replace(']', '').trim();
+        //username = username.replace('[', '').replace(']', '').trim();
         let list = await Product.find({username: { $regex: username, $options: 'i' }}, '-password -salt');
         res.json(list);
         
