@@ -15,7 +15,7 @@ const getUserByUsername = async function (req, res, next) {
     let username = req.query.username;
     if(typeof username === 'string')
     {
-        //username = username.replace('[', '').replace(']', '').trim();
+        username = username.replace('[', '').replace(']', '').trim();
         let list = await Product.find({username: { $regex: username, $options: 'i' }}, '-password -salt');
         res.json(list);
         
@@ -99,9 +99,10 @@ const deleteAllUsers = async (req, res) => {
 
 module.exports = {
   //getAllUsers,
+  getUserByUsername,
   getUserById,
   createUser,
   updateUser,
-  deleteAllUsers,
-  getUserByUsername
+  deleteAllUsers
+  
 }
