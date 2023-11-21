@@ -1,4 +1,36 @@
 const Users = require('../models/User');
+const bcrypt = require('bcrypt');
+
+const getUserByUsernameAndPassword = async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    // Find the user by username
+    const user = await Users.findOne({ username });
+
+    // If the user doesn't exist, return an error
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    // Compare the provided password with the hashed password in the database
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ message: 'Incorrect password.' });
+    }
+
+    // Passwords match, return the user data (excluding the password)
+    res.status(200).json({
+      _id: user._id,
+      username: user.username,
+      // Add other user properties as needed
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error while fetching user.' });
+  }
+};
 
 const getAllUsers = async (req, res) => {
   try {
