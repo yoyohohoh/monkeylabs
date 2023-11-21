@@ -13,10 +13,10 @@ const getAllUsers = async (req, res) => {
 const getUserByUsername = async function (req, res, next) {
     try {    
     let username = req.query.username;
-    if(typeof keyword === 'string')
+    if(typeof username === 'string')
     {
         
-        let list = await Product.find({username: { $regex: keyword, $options: 'i' }}, '-password -salt');
+        let list = await Product.find({username: { $regex: username, $options: 'i' }}, '-password -salt');
         res.json(list);
         
     }
