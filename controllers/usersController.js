@@ -1,6 +1,6 @@
 const Users = require('../models/User');
 
-/*const getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res) => {
   try {
       const venues = await Users.find({});
       res.status(200).json(venues);
@@ -8,11 +8,11 @@ const Users = require('../models/User');
       console.error(err);
       res.status(500).json({ message: 'Server error while fetching users.' });
   }
-};*/
+};
 
 const getUserByUsername = async (req, res) => {
 try {
-    const { username } = req.params.username;
+    const { username } = req.params;
     const user = await User.findOne({ username });
 
     if (user) {
