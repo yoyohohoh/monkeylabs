@@ -1,34 +1,20 @@
 const Users = require('../models/User');
-const bcrypt = require('bcrypt');
 
-const getUserByUsernameAndPassword = async (req, res) => {
-  const { username, password } = req.body;
-
+const getUserByUsername = async (req, res) => {
   try {
-    // Find the user by username
-    const user = await Users.findOne({ username });
+      // Assuming there's a User model with a 'username' field
+      const { username } = req.params; // Assuming the username is part of the request parameters
 
-    // If the user doesn't exist, return an error
-    if (!user) {
-      return res.status(404).json({ message: 'User not found.' });
-    }
+      const user = await Users.findOne({ username });
 
-    // Compare the provided password with the hashed password in the database
-    const passwordMatch = await bcrypt.compare(password, user.password);
+      if (!user) {
+          return res.status(404).json({ message: 'User not found.' });
+      }
 
-    if (!passwordMatch) {
-      return res.status(401).json({ message: 'Incorrect password.' });
-    }
-
-    // Passwords match, return the user data (excluding the password)
-    res.status(200).json({
-      _id: user._id,
-      username: user.username,
-      // Add other user properties as needed
-    });
+      res.status(200).json(user);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error while fetching user.' });
+      console.error(err);
+      res.status(500).json({ message: 'Server error while fetching user by username.' });
   }
 };
 
