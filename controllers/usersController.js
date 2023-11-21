@@ -10,7 +10,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const getUserByUsername = async (req, res) => {
+/*const getUserByUsername = async (req, res) => {
 try {
     const { username } = req.params;
     const user = await User.findOne({ username });
@@ -24,7 +24,7 @@ try {
     console.error('Error fetching user by username:', error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+};*/
 
 
 
