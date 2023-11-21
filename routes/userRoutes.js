@@ -3,8 +3,8 @@ const userController = require('../controllers/usersController');
 
 const router = express.Router();
 
-//router.get('/api/users', userController.getUserByUsername);
-router.get('/api/users', userController.getAllUsers);
+router.get('/api/users', userController.getUserByUsername);
+//router.get('/api/users', userController.getAllUsers);
 router.get('/api/users/:id', userController.getUserById);
 
 router.post('/api/users', userController.createUser);
