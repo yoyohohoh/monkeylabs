@@ -13,7 +13,7 @@ const getAllUsers = async (req, res) => {
 const getUserByUsername = async (req, res) => {
   try {
     const { username } = req.params;
-    const user = await User.findOne({ username });
+    const user = await Users.findOne({ username });
 
     if (user) {
       res.json(user);
