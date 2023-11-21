@@ -6,7 +6,7 @@ const getAllUsers = async (req, res) => {
       res.status(200).json(venues);
   } catch (err) {
       console.error(err);
-      res.status(500).json({ message: 'Server error while fetching venues.' });
+      res.status(500).json({ message: 'Server error while fetching users.' });
   }
 };
 
@@ -24,7 +24,8 @@ const getUserByUsername = async function (req, res, next) {
         getAllProducts(req, res, next) ;
     }
 } catch (error) {
-    next(error);
+    console.error(err);
+      res.status(500).json({ message: 'Server error while fetching username.' });
     
 }
     }
