@@ -1,8 +1,8 @@
 const Users = require('../models/User');
 
-/*const getAllUsers = async (req, res, next) => {
+const getAllUsers = async (req, res) => {
   try {
-      const venues = await Users.find({}, '-password -salt');
+      const venues = await Users.find({});
       res.status(200).json(venues);
   } catch (err) {
       console.error(err);
@@ -29,23 +29,6 @@ const getUserById = async (req, res) => {
     }
 };
 
-const getUserByUsername = async function (req, res) {
-      const username = req.params.username;
-if(typeof username === 'string')
-        {
-    try {
-        const users = await Users.findOne(username);
-        
-        if (!users) {
-            return res.status(404).json({ message: 'Username not found.' });
-        }
-
-        res.status(200).json(users);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server error while fetching username.' });
-    }}
-    }
 
 const createUser = async (req, res) => {
     const { username, email, password } = req.body;
@@ -98,8 +81,7 @@ const deleteAllUsers = async (req, res) => {
 };
 
 module.exports = {
-  //getAllUsers,
-  getUserByUsername,
+  getAllUsers,
   getUserById,
   createUser,
   updateUser,
