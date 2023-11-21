@@ -10,7 +10,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-/*const getUserByUsername = async function (req, res, next) {
+const getUserByUsername = async function (req, res, next) {
     try {    
     let username = req.query.username;
     if(typeof username === 'string')
@@ -28,7 +28,7 @@ const getAllUsers = async (req, res) => {
       res.status(500).json({ message: 'Server error while fetching username.' });
     
 }
-    }*/
+    }
 
 const getUserById = async (req, res) => {
   const usersId = req.params.id;
@@ -102,5 +102,6 @@ module.exports = {
   getUserById,
   createUser,
   updateUser,
-  deleteAllUsers
+  deleteAllUsers,
+  getUserByUsername
 }
