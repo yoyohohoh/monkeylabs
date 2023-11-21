@@ -1,12 +1,28 @@
 const Users = require('../models/User');
 
-const getAllUsers = async (req, res) => {
+/*const getAllUsers = async (req, res) => {
   try {
       const venues = await Users.find({});
       res.status(200).json(venues);
   } catch (err) {
       console.error(err);
       res.status(500).json({ message: 'Server error while fetching users.' });
+  }
+};*/
+
+const getUserByUsername = async (req, res) => {
+try {
+    const { username } = req.query;
+    const user = await User.findOne({ username });
+
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching user by username:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 };
 
@@ -81,7 +97,8 @@ const deleteAllUsers = async (req, res) => {
 };
 
 module.exports = {
-  getAllUsers,
+  //getAllUsers,
+  getUserByUsername,
   getUserById,
   createUser,
   updateUser,
