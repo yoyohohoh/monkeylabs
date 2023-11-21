@@ -1,6 +1,6 @@
 const Users = require('../models/User');
 
-const getAllUsers = async (req, res, next) => {
+/*const getAllUsers = async (req, res, next) => {
   try {
       const venues = await Users.find({}, '-password -salt');
       res.status(200).json(venues);
@@ -8,7 +8,7 @@ const getAllUsers = async (req, res, next) => {
       console.error(err);
       res.status(500).json({ message: 'Server error while fetching users.' });
   }
-};
+};*/
 
 const getUserByUsername = async function (req, res, next) {
     try {    
@@ -98,7 +98,7 @@ const deleteAllUsers = async (req, res) => {
 };
 
 module.exports = {
-  getAllUsers,
+  //getAllUsers,
   getUserById,
   createUser,
   updateUser,
