@@ -12,7 +12,8 @@ const Users = require('../models/User');
 
 const getUserByUsername = async function (req, res) {
       const username = req.params.username;
-
+if(typeof username === 'string')
+        {
     try {
         const users = await Users.findOne(username);
         
@@ -24,7 +25,7 @@ const getUserByUsername = async function (req, res) {
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server error while fetching username.' });
-    }
+    }}
     }
 
 const getUserById = async (req, res) => {
