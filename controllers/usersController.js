@@ -1,6 +1,6 @@
 const Users = require('../models/User');
 
-const getUserByUsername = async (req, res) => {
+/*const getUserByUsername = async (req, res) => {
   try {
       // Assuming there's a User model with a 'username' field
       const { username } = req.params; // Assuming the username is part of the request parameters
@@ -16,7 +16,7 @@ const getUserByUsername = async (req, res) => {
       console.error(err);
       res.status(500).json({ message: 'Server error while fetching user by username.' });
   }
-};
+};*/
 
 const getAllUsers = async (req, res) => {
   try {
