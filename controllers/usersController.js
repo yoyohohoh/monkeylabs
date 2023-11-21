@@ -17,13 +17,13 @@ const getUserByUsername = async function (req, res) {
         const users = await Users.findOne(username);
         
         if (!users) {
-            return res.status(404).json({ message: 'Users not found.' });
+            return res.status(404).json({ message: 'Username not found.' });
         }
 
         res.status(200).json(users);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'Server error while fetching users.' });
+        res.status(500).json({ message: 'Server error while fetching username.' });
     }
     }
 
@@ -34,13 +34,13 @@ const getUserById = async (req, res) => {
         const users = await Users.findById(usersId);
         
         if (!users) {
-            return res.status(404).json({ message: 'Users not found.' });
+            return res.status(404).json({ message: 'User ID not found.' });
         }
 
         res.status(200).json(users);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'Server error while fetching users.' });
+        res.status(500).json({ message: 'Server error while fetching userid.' });
     }
 };
 
