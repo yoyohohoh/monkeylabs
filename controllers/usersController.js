@@ -12,7 +12,7 @@ const Users = require('../models/User');
 
 const getUserByUsername = async (req, res) => {
 try {
-    const { username } = req.query;
+    const { username } = req.params.username;
     const user = await User.findOne({ username });
 
     if (user) {
