@@ -27,6 +27,23 @@ const getTicketById = async (req, res) => {
     }
 };
 
+const getTicketByEventId = async (req, res) => {
+    const ticketsId = req.params.id;
+    
+        try {
+            const tickets = await Tickets.find({ event_id: ticketsId });
+            
+            if (!tickets) {
+                return res.status(404).json({ message: 'Tickets not found.' });
+            }
+    
+            res.status(200).json(tickets);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Server error while fetching tickets.' });
+        }
+};
+
 const createTicket = async (req, res) => {
     const { event_id, price, available, seat_number } = req.body;
 
