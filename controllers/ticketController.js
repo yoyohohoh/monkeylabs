@@ -27,7 +27,7 @@ const getTicketById = async (req, res) => {
     }
 };
 
-const getTicketByEventId = async (req, res) => {
+const getAllTicketsByEventId = async (req, res) => {
     const ticketsId = req.params.id;
     
         try {
@@ -98,6 +98,7 @@ const deleteAllTickets = async (req, res) => {
 module.exports = {
   getAllTickets,
   getTicketById,
+  getAllTicketsByEventId,
   createTicket,
   updateTicket,
   deleteAllTickets

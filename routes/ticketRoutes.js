@@ -4,7 +4,7 @@ const ticketController = require('../controllers/ticketController');
 const router = express.Router();
 
 router.get('/api/tickets', ticketController.getAllTickets);
-router.get('/api/tickets/event/:id', ticketController.getTicketByEventId);
+router.get('/api/tickets/event/:id', ticketController.getAllTicketsByEventId);
 
 router.post('/api/tickets', ticketController.createTicket);
 
