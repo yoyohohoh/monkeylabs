@@ -31,7 +31,7 @@ const getAllTicketsByEventId = async (req, res) => {
     const ticketsId = req.params.id;
     
         try {
-            const tickets = await Tickets.find({ event_id: ticketsId });
+            const tickets = await Tickets.find({ event_id: ticketsId, available: true });
             
             if (!tickets) {
                 return res.status(404).json({ message: 'Tickets not found.' });

@@ -2,7 +2,7 @@ const Events = require('../models/Event');
 
 const getAllEvents = async (req, res) => {
   try {
-      const events = await Events.find({});
+      const events = await Events.find({}).populate('venue').populate('category');
       res.status(200).json(events);
   } catch (err) {
       console.error(err);
@@ -14,8 +14,8 @@ const getEventById = async (req, res) => {
   const eventsId = req.params.id;
 
     try {
-        const events = await Events.findById(eventsId);
-        
+        const events = await Events.findById(eventsId).populate('venue').populate('category');
+        console.log(events)
         if (!events) {
             return res.status(404).json({ message: 'Events not found.' });
         }
@@ -28,18 +28,20 @@ const getEventById = async (req, res) => {
 };
 
 const createEvent = async (req, res) => {
-    const { event_name, venue_id, event_date, event_description } = req.body;
+    const { event_name, venue_id, event_date, event_description, event_image, category_id } = req.body;
 
-    if (!event_name || !venue_id || !event_date || !event_description) {
+    if (!event_name || !venue_id || !event_date || !event_description || !event_image || !category_id) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 
     try {
         const newEvents = new Events({
             event_name,
-            venue_id,
+            venue: venue_id,
             event_date,
             event_description,
+            event_image,
+            category: category_id
         });
 
         const savedEvents = await newEvents.save();
