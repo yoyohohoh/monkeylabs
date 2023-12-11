@@ -5,6 +5,7 @@ const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3001';
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 const app = express();
 
@@ -18,7 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: process.env.SESSION_SECRET, // Secret key to sign the session ID cookie (use a .env variable)
     resave: false, // Don't save session if unmodified
-    saveUninitialized: false, // Don't create session until something stored
+    saveUninitialized: true, // Don't create session until something stored
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
     cookie: {
         httpOnly: true, // Prevents client-side JS from reading the cookie
         secure: process.env.NODE_ENV === 'production', // Use secure cookies in production (requires HTTPS)

@@ -3,7 +3,7 @@ const Ticket = require('../models/Ticket');
 
 const getAllOrders = async (req, res) => {
     try {
-        const venues = await Orders.find({ user_id: req.session?.user?._id }).populate('ticket');
+        const venues = await Orders.find({ user_id: req.session?.userId }).populate('ticket');
         res.status(200).json(venues);
     } catch (err) {
         console.error(err);
@@ -29,14 +29,14 @@ const getOrderById = async (req, res) => {
 };
 
 const createOrder = async (req, res) => {
-    const user = req.session.user;
+    const userId = req.session.userId;
     const body = req.body || {};
 
     const { ticketId, cardHolder, cardNumber, cvv, expiryDate } = body;
 
-    console.log(user, ticketId, cardHolder, cardNumber, cvv, expiryDate)
+    console.log(userId, ticketId, cardHolder, cardNumber, cvv, expiryDate)
 
-    if (!user?._id || !ticketId || !cardHolder || !cardNumber || !cvv || !expiryDate) {
+    if (!userId || !ticketId || !cardHolder || !cardNumber || !cvv || !expiryDate) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 
@@ -49,7 +49,7 @@ const createOrder = async (req, res) => {
         }
 
         const newOrders = new Orders({
-            user_id: user._id,
+            user_id: userId,
             order_date: new Date(),
             ticket: ticket._id,
             cardHolder,

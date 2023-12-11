@@ -1,4 +1,5 @@
 const Users = require('../models/User');
+const bcrypt = require('bcrypt');
 
 const getAllUsers = async (req, res) => {
     try {
@@ -56,11 +57,13 @@ const createUser = async (req, res) => {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     try {
         const newUsers = new Users({
             username,
             email,
-            password,
+            password: hashedPassword,
         });
 
         const savedUsers = await newUsers.save();
@@ -74,9 +77,20 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const usersId = req.params.id;
+    let update = { ...req.body };
+
+    // Check if the password is part of the update and hash it
+    if (update.password) {
+        try {
+            update.password = await bcrypt.hash(update.password, 10); // 10 is the salt rounds
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ message: 'Error hashing password.' });
+        }
+    }
 
     try {
-        const updatedUsers = await Users.findByIdAndUpdate(usersId, req.body, { new: true, runValidators: true });
+        const updatedUsers = await Users.findByIdAndUpdate(usersId, update, { new: true, runValidators: true });
 
         if (!updatedUsers) {
             return res.status(404).json({ message: 'Users not found.' });
@@ -130,14 +144,22 @@ const loginUser = async (req, res) => {
             return res.status(404).json({ message: 'User not found.' });
         }
 
-        if (user.password !== password) {
+        const isMatch = bcrypt.compare(password, user.password);
+        if (!isMatch) {
             return res.status(401).json({ message: 'Invalid password.' });
         }
 
-        req.session.user = user;
-        console.log(req.session.user)
+        req.session.userId = user._id.toString();
+        console.log("req session user", req.session.userId)
 
-        res.status(200).json({ message: 'User successfully logged in.', user });
+        req.session.save(function(err){
+            if(err){
+                console.log(err)
+                res.status(500).json({ message: 'Server error while logging in user.' });
+            }
+            res.status(200).json({ message: 'User successfully logged in.', user });
+        })
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server error while logging in user.' });
