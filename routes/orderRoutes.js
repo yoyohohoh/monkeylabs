@@ -5,6 +5,8 @@ const router = express.Router();
 
 router.get('/api/orders', orderController.getAllOrders);
 
+router.get('/api/orders/user/:id', orderController.getAllOrdersByUserId);
+
 router.post('/api/orders', orderController.createOrder);
 
 router.put('/api/orders/:id', orderController.updateOrder);

@@ -3,7 +3,18 @@ const Ticket = require('../models/Ticket');
 
 const getAllOrders = async (req, res) => {
     try {
-        const venues = await Orders.find({ user_id: req.session?.userId }).populate('ticket');
+        const venues = await Orders.find({}).populate('ticket');
+        res.status(200).json(venues);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error while fetching venues.' });
+    }
+};
+
+const getAllOrdersByUserId = async (req, res) => {
+    const userId = req.params.id;
+    try {
+        const venues = await Orders.find({ user_id: userId }).populate('ticket');
         res.status(200).json(venues);
     } catch (err) {
         console.error(err);
@@ -29,10 +40,9 @@ const getOrderById = async (req, res) => {
 };
 
 const createOrder = async (req, res) => {
-    const userId = req.session.userId;
     const body = req.body || {};
 
-    const { ticketId, cardHolder, cardNumber, cvv, expiryDate } = body;
+    const { userId, ticketId, cardHolder, cardNumber, cvv, expiryDate } = body;
 
     console.log(userId, ticketId, cardHolder, cardNumber, cvv, expiryDate)
 
@@ -96,6 +106,7 @@ const deleteAllOrders = async (req, res) => {
 
 module.exports = {
     getAllOrders,
+    getAllOrdersByUserId,
     getOrderById,
     createOrder,
     updateOrder,
